@@ -1,15 +1,13 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 const ROOT_URL = "http://yoshi.willandskill.eu:8999/api/v1/";
 const LOGIN_URL = `${ROOT_URL}auth/api-token-auth/`;
 
 function App() {
-  const emailInput = useRef(null);
-  const passwordInput = useRef(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   function login() {
-    const email = emailInput.current.value;
-    const password = passwordInput.current.value;
     console.log(email, password);
     fetch(LOGIN_URL);
   }
@@ -22,9 +20,10 @@ function App() {
           <label>
             Email{" "}
             <input
-              ref={emailInput}
               name="email"
-              type="text"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.currentTarget.value)}
               placeholder="john.doe@mail.com"
             ></input>
           </label>
@@ -32,9 +31,10 @@ function App() {
         <div>
           <label htmlFor="password">Password</label>
           <input
-            ref={passwordInput}
             name="password"
             type="password"
+            value={password}
+            onChange={(event) => setPassword(event.currentTarget.value)}
             placeholder="******"
           ></input>
         </div>
