@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
+import { UserContext } from "../contexts/UserContext";
 
 const ROOT_URL = "http://yoshi.willandskill.eu:8999/api/v1/";
 const LOGIN_URL = `${ROOT_URL}auth/api-token-auth/`;
@@ -9,7 +10,7 @@ export default function LoginForm() {
 
   const [email, setEmail] = useState("test.user@willandskill.se");
   const [password, setPassword] = useState("js-lesson-10");
-  const [token, setToken] = useState(null);
+  const { setToken } = useContext(UserContext);
 
   function login() {
     console.log(email, password);
