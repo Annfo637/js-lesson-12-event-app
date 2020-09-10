@@ -4,8 +4,9 @@ const ROOT_URL = "http://yoshi.willandskill.eu:8999/api/v1/";
 const LOGIN_URL = `${ROOT_URL}auth/api-token-auth/`;
 
 function App() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("test.user@willandskill.se");
+  const [password, setPassword] = useState("js-lesson-10");
+  const [token, setToken] = useState(null);
 
   function login() {
     console.log(email, password);
@@ -20,7 +21,11 @@ function App() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
-    });
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setToken(data.token);
+      });
   }
 
   return (
