@@ -1,34 +1,20 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { UserContext } from "../contexts/UserContext";
-
-const ROOT_URL = "http://yoshi.willandskill.eu:8999/api/v1/";
-const LOGIN_URL = `${ROOT_URL}auth/api-token-auth/`;
+import EventKit from "../data/EventKit";
 
 export default function LoginForm() {
   const history = useHistory();
 
   const [email, setEmail] = useState("test.user@willandskill.se");
   const [password, setPassword] = useState("js-lesson-10");
-  const { setToken } = useContext(UserContext);
+  const eventKit = new EventKit();
 
   function login() {
-    console.log(email, password);
-    const payload = {
-      email: email,
-      password: password,
-    };
-
-    fetch(LOGIN_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    })
+    eventKit
+      .login(email, password)
       .then((res) => res.json())
       .then((data) => {
-        setToken(data.token);
+        eventKit.setToken(data.token);
         history.push("/event-list");
       });
   }
